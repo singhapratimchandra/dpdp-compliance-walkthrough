@@ -1,0 +1,254 @@
+<title>DPDP 13 November 2026 Checklist</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one reading column; a three-stop commencement rail on top, then a staged checklist that reads like a filing docket, each item tagged with its rule citation. */
+:root{
+  --bg:#f5f7fa; --surface:#ffffff; --ink:#131c2e; --muted:#566178; --line:#d5dbe6;
+  --accent:#1f4fd8; --accent-soft:#e4ebfd; --now:#0b7a5c; --now-soft:#dcf3ea; --later:#a05a00; --later-soft:#fbeed6;
+  --display:"Space Grotesk",system-ui,sans-serif; --body:"Inter",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#0f1420; --surface:#171e2e; --ink:#e8ecf5; --muted:#9aa5bd; --line:#2b3550;
+  --accent:#86a6ff; --accent-soft:#1d2a4d; --now:#4fd1a5; --now-soft:#123529; --later:#f0b45a; --later-soft:#3a2a10; color-scheme:dark } }
+:root[data-theme="dark"]{
+  --bg:#0f1420; --surface:#171e2e; --ink:#e8ecf5; --muted:#9aa5bd; --line:#2b3550;
+  --accent:#86a6ff; --accent-soft:#1d2a4d; --now:#4fd1a5; --now-soft:#123529; --later:#f0b45a; --later-soft:#3a2a10; color-scheme:dark }
+
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+.wrap{max-width:880px;margin:0 auto;padding-block:40px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:44px}
+h1,h2,h3{font-family:var(--display);margin:0;text-wrap:balance;line-height:1.15}
+h1{font-size:clamp(1.9rem,5vw,2.8rem);font-weight:700;letter-spacing:-.02em}
+h2{font-size:1.45rem;font-weight:600}
+h3{font-size:1.05rem;font-weight:600}
+p{margin:0;max-width:65ch}
+.eyebrow{font-family:var(--mono);font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.lede{color:var(--muted);font-size:1.05rem}
+header,section{display:flex;flex-direction:column;gap:16px}
+.cite{font-family:var(--mono);font-size:.72rem;color:var(--accent);background:var(--accent-soft);padding:2px 7px;border-radius:4px;white-space:nowrap}
+
+/* commencement rail */
+.rail{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:3px solid var(--line);margin-top:6px}
+.stop{padding:18px 16px 0 0;position:relative;min-width:0;display:flex;flex-direction:column;gap:6px}
+.stop::before{content:"";position:absolute;top:-10px;left:0;width:17px;height:17px;border-radius:50%;background:var(--bg);border:3px solid var(--line)}
+.stop.done::before{background:var(--muted);border-color:var(--muted)}
+.stop.now::before{background:var(--now);border-color:var(--now);box-shadow:0 0 0 5px var(--now-soft)}
+.stop.later::before{border-color:var(--later)}
+.stop .date{font-family:var(--display);font-weight:600;font-size:1.1rem}
+.stop .tag{font-family:var(--mono);font-size:.7rem;text-transform:uppercase;letter-spacing:.08em}
+.stop.done .tag{color:var(--muted)} .stop.now .tag{color:var(--now)} .stop.later .tag{color:var(--later)}
+.stop p{font-size:.9rem;color:var(--muted)}
+@media (max-width:640px){
+  .rail{grid-template-columns:1fr;border-top:0;border-left:3px solid var(--line);margin-left:8px}
+  .stop{padding:0 0 22px 22px} .stop::before{top:2px;left:-10px}
+}
+
+/* starts / does not start */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:640px){.split{grid-template-columns:1fr}}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px;min-width:0;display:flex;flex-direction:column;gap:10px}
+.panel h3{display:flex;align-items:center;gap:8px}
+.dot{width:10px;height:10px;border-radius:50%;flex:none}
+.panel.yes .dot{background:var(--now)} .panel.no .dot{background:var(--later)}
+.panel ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px;font-size:.93rem}
+
+/* checklist */
+.progress{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:.8rem;color:var(--muted)}
+.bar{flex:1;height:8px;background:var(--line);border-radius:4px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--now);transition:width .25s}
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+.stage{display:grid;grid-template-columns:44px 1fr;gap:14px}
+.num{font-family:var(--display);font-weight:700;font-size:1.05rem;width:40px;height:40px;border-radius:50%;border:2px solid var(--accent);color:var(--accent);display:grid;place-items:center;background:var(--surface)}
+.stage.complete .num{background:var(--now);border-color:var(--now);color:var(--bg)}
+.spine{display:flex;flex-direction:column;align-items:center;gap:6px}
+.spine::after{content:"";flex:1;width:2px;background:var(--line)}
+.stage:last-child .spine::after{display:none}
+.stage-body{min-width:0;padding-bottom:26px;display:flex;flex-direction:column;gap:10px}
+.stage-body > p{color:var(--muted);font-size:.93rem}
+.stage-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 12px;padding-top:8px}
+.count{font-family:var(--mono);font-size:.75rem;color:var(--muted)}
+.items{list-style:none;margin:0;padding:0;background:var(--surface);border:1px solid var(--line);border-radius:10px}
+.items li + li{border-top:1px solid var(--line)}
+.items label{display:grid;grid-template-columns:22px 1fr;gap:12px;padding:12px 14px;cursor:pointer;align-items:start}
+.items input{width:18px;height:18px;margin:3px 0 0;accent-color:var(--now)}
+.items input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.txt{min-width:0;display:flex;flex-wrap:wrap;gap:4px 10px;align-items:baseline;font-size:.95rem}
+.txt span:first-child{flex:1 1 260px}
+.items input:checked + .txt span:first-child{color:var(--muted);text-decoration:line-through}
+button.reset{align-self:flex-start;font:500 .85rem var(--body);color:var(--accent);background:none;border:1px solid var(--line);border-radius:6px;padding:7px 12px;cursor:pointer}
+button.reset:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.note{border:1px dashed var(--later);background:var(--later-soft);border-radius:10px;padding:16px 18px;display:flex;flex-direction:column;gap:8px;font-size:.93rem}
+.note ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px}
+footer{font-size:.85rem;color:var(--muted);display:flex;flex-direction:column;gap:8px}
+footer a{color:var(--accent)}
+</style>
+
+<div class="wrap">
+  <header>
+    <span class="eyebrow">Digital Personal Data Protection Act, 2023 · Rules, 2025</span>
+    <h1>What the 13 November 2026 milestone expects of you</h1>
+    <p class="lede">Today is the second of three commencement dates. It opens Consent Manager registration and nothing else. If you plan to become a Consent Manager, the full checklist below applies now. If you are any other business, nothing new is legally due today, and your real deadline is 13 May 2027.</p>
+    <div class="rail" role="list">
+      <div class="stop done" role="listitem"><span class="tag">In force</span><span class="date">13 Nov 2025</span><p>Rules 1, 2, 17 to 21. Data Protection Board established in law.</p></div>
+      <div class="stop now" role="listitem"><span class="tag">Today</span><span class="date">13 Nov 2026</span><p>Rule 4 and the First Schedule. Act sections 6(9) and 27(1)(d).</p></div>
+      <div class="stop later" role="listitem"><span class="tag">6 months away</span><span class="date">13 May 2027</span><p>Rules 3, 5 to 16, 22, 23. Notice, consent, security, breach, rights, children, SDFs, penalties.</p></div>
+    </div>
+  </header>
+
+  <section>
+    <h2>What starts today, and what does not</h2>
+    <div class="split">
+      <div class="panel yes">
+        <h3><span class="dot"></span>Starts 13 November 2026</h3>
+        <ul>
+          <li>Consent Managers can apply to the Board for registration <span class="cite">Rule 4(1)</span></li>
+          <li>Registration conditions and ongoing obligations apply <span class="cite">First Schedule A, B</span></li>
+          <li>Every Consent Manager must be registered with the Board <span class="cite">s.6(9)</span></li>
+          <li>The Board can inquire into a Consent Manager's breach of its obligations or registration conditions <span class="cite">s.27(1)(d)</span></li>
+        </ul>
+      </div>
+      <div class="panel no">
+        <h3><span class="dot"></span>Waits until 13 May 2027</h3>
+        <ul>
+          <li>Notice and consent duties <span class="cite">Rule 3, ss.5-6</span></li>
+          <li>Security safeguards and breach reporting <span class="cite">Rules 6-7</span></li>
+          <li>Erasure, retention, contact details <span class="cite">Rules 8-9</span></li>
+          <li>Children's data, SDF duties, Data Principal rights <span class="cite">Rules 10-14</span></li>
+          <li>Monetary penalties <span class="cite">ss.33-34</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="cm">
+    <span class="eyebrow">Track A · due now</span>
+    <h2>Consent Manager applicant walkthrough</h2>
+    <p class="lede">Five stages, in the order you will meet them. Tick items off as you close them. Your ticks are saved in this browser only.</p>
+    <div class="progress"><span id="cm-count">0 of 0</span><div class="bar"><i id="cm-bar"></i></div></div>
+    <div id="cm-stages"></div>
+    <button class="reset" id="cm-reset" type="button">Clear all ticks</button>
+  </section>
+
+  <section id="df">
+    <span class="eyebrow">Track B · not due today</span>
+    <h2>Every other Data Fiduciary: where you should be by now</h2>
+    <p class="lede">None of this is enforceable until 13 May 2027. With six months left, these are the workstreams that should already be moving.</p>
+    <div class="progress"><span id="df-count">0 of 0</span><div class="bar"><i id="df-bar"></i></div></div>
+    <div id="df-stages"></div>
+  </section>
+
+  <section>
+    <h2>Check before you rely on this</h2>
+    <div class="note">
+      <ul>
+        <li><strong>Board readiness.</strong> The latest reports I could find (August to October 2026) said no Chairperson or Members had been appointed and no registration portal was described. The Board must also publish the application particulars and the platform standards used for certification. Confirm the current position on the Board and MeitY websites.</li>
+        <li><strong>Exact date.</strong> Rule 4 starts one year after Gazette publication. Most sources give publication as 13 November 2025; a few say 14 November. Confirm against the Gazette copy.</li>
+        <li><strong>Proposed acceleration.</strong> In early 2026 MeitY floated moving the 18-month deadline up to November 2026, by some accounts for Significant Data Fiduciaries only. As of October 2026 no amendment had been gazetted. If one has been since, Track B is due today for those it covers.</li>
+        <li><strong>Wording.</strong> Checklist items paraphrase the First Schedule. Read the Gazette text for anything you file.</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    <p>This is a planning aid, not legal advice. Prepared 13 November 2026 from secondary sources:</p>
+    <p><a href="https://theprivacylabs.com/blogs/dpdp-13-november-2026-what-starts">Privacy Labs: what starts on 13 November 2026</a> · <a href="https://indiadatalaw.org/deadlines/">India Data Law: deadlines</a> · <a href="https://www.scconline.com/blog/post/2025/12/26/digital-personal-data-protection-rules-2025-key-highlights/">SCC Online: Rules highlights</a> · <a href="https://www.azbpartners.com/bank/indias-digital-personal-data-protection-act-phased-rollout-and-key-compliance-milestones/">AZB: phased rollout</a> · <a href="https://tsaaro.com/blogs/consent-managers-under-the-dpdp-act-and-dpdp-rules-2025-functions-obligations-and-governance">Tsaaro: Consent Managers</a></p>
+  </footer>
+</div>
+
+<script>
+const TRACKS = {
+  cm: [
+    {t:"Confirm you are eligible", d:"The Board looks at who you are before it looks at what you built.", items:[
+      ["Company incorporated in India","Sch. I A(1)"],
+      ["Net worth of at least ₹2 crore","Sch. I A(4)"],
+      ["Evidence of technical, operational and financial capacity","Sch. I A(2)"],
+      ["Sound financial condition and management character","Sch. I A(3)"],
+      ["Adequate business volume, capital structure and earning prospects","Sch. I A(5)"],
+      ["Directors, key managerial personnel and senior management with a record of fairness and integrity","Sch. I A(6)"],
+      ["Proposed operations serve the interests of Data Principals","Sch. I A(8)"]]},
+    {t:"Lock independence into your governance", d:"A Consent Manager sits between people and Data Fiduciaries, so conflicts are designed out at charter level.", items:[
+      ["Memorandum and articles carry the conflict of interest obligations, amendable only with the Board's prior approval","Sch. I A(7)"],
+      ["Policy to avoid conflicts with Data Fiduciaries, covering promoters and key managerial personnel","Sch. I B(9)"],
+      ["Controls so directors and senior management hold no directorship, financial interest, employment or beneficial ownership in Data Fiduciaries","Sch. I B(10)"],
+      ["Public disclosure page: promoters, directors, senior management, every holder above 2%, and entities where they hold above 2%","Sch. I B(11)"]]},
+    {t:"Build the platform and get it certified", d:"Certification is against standards the Board publishes, so track those before booking the audit.", items:[
+      ["People can give, manage, review and withdraw consent, directly or via another onboarded Data Fiduciary","Sch. I B(1)"],
+      ["Personal data passes through in a form you cannot read","Sch. I B(2)"],
+      ["Record of consents given, denied or withdrawn, the notices behind them, and each data sharing","Sch. I B(3)"],
+      ["Data Principal can see that record and export it in machine-readable form; retained at least 7 years","Sch. I B(4)"],
+      ["Website or app (or both) as the primary way to reach your service","Sch. I B(5)"],
+      ["Reasonable security safeguards against personal data breach","Sch. I B(7)"],
+      ["Independent certification of the interoperable platform and of your technical and organisational measures","Sch. I A(9)"]]},
+    {t:"Apply to the Board", d:"Open from today. The Board works as a digital office.", items:[
+      ["Assemble the particulars and documents the Board lists on its website","Rule 4(1)"],
+      ["File the application with the Board","Rule 4(1)"],
+      ["Answer the Board's inquiry into whether the conditions are met","Rule 4(2)"],
+      ["On registration, check your particulars as published by the Board; on rejection, review the stated reasons","Rule 4(2)"]]},
+    {t:"Stay registered", d:"Falling short can bring directions, suspension or cancellation after a hearing.", items:[
+      ["No sub-contracting or assignment of any obligation","Sch. I B(6)"],
+      ["Act in a fiduciary capacity towards the Data Principal","Sch. I B(8)"],
+      ["Audit mechanism that reviews controls and conditions and reports to the Board periodically and on request","Sch. I B(12)"],
+      ["Board's prior approval before any sale, merger or other transfer of control","Sch. I B(13)"],
+      ["Process to furnish information the Board calls for and act on its directions","Rule 4(4)-(6)"]]}
+  ],
+  df: [
+    {t:"Know your position", d:"", items:[
+      ["Confirm the Act applies and whether you act as Data Fiduciary, processor or both","ss.2-3"],
+      ["Assess whether you could be notified as a Significant Data Fiduciary","s.10"],
+      ["Map personal data across systems, vendors and transfers","prep"]]},
+    {t:"Rebuild notice and consent", d:"", items:[
+      ["Standalone, plain-language notice for each collection point, with itemised data and purposes","Rule 3"],
+      ["Consent records tied to the notice shown, with withdrawal as easy as giving","s.6"],
+      ["Verifiable parental consent flow where you handle children's data","Rule 10"],
+      ["Decide whether to onboard with registered Consent Managers once they exist","s.6(7)"]]},
+    {t:"Get operations ready", d:"", items:[
+      ["Security safeguards, including access logs kept for one year","Rule 6"],
+      ["Breach drill: notify affected people without delay, detailed report to the Board within 72 hours","Rule 7"],
+      ["Retention and erasure schedule, with 48-hour notice before erasure where required","Rule 8"],
+      ["Published contact for data questions; grievance response within 90 days","Rules 9, 14"],
+      ["Access, correction, erasure and nomination routes for Data Principals","ss.11-14"],
+      ["Processor contracts updated to pass down these duties","s.8(2)"]]}
+  ]
+};
+
+function load(k){ try{ return JSON.parse(localStorage.getItem(k)||"{}") }catch(e){ return {} } }
+function save(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)) }catch(e){} }
+
+function render(key){
+  const state = load("dpdp-"+key), host = document.getElementById(key+"-stages");
+  host.innerHTML = "";
+  TRACKS[key].forEach((s,si)=>{
+    const el = document.createElement("div"); el.className = "stage";
+    el.innerHTML = '<div class="spine"><span class="num">'+(si+1)+'</span></div>'+
+      '<div class="stage-body"><div class="stage-head"><h3></h3><span class="count"></span></div>'+(s.d?'<p></p>':'')+'<ul class="items"></ul></div>';
+    el.querySelector("h3").textContent = s.t;
+    if(s.d) el.querySelector(".stage-body > p").textContent = s.d;
+    const ul = el.querySelector("ul");
+    s.items.forEach((it,ii)=>{
+      const id = key+"-"+si+"-"+ii, li = document.createElement("li");
+      li.innerHTML = '<label for="'+id+'"><input type="checkbox" id="'+id+'"><span class="txt"><span></span><span class="cite"></span></span></label>';
+      li.querySelector(".txt span").textContent = it[0];
+      li.querySelector(".cite").textContent = it[1];
+      const cb = li.querySelector("input"); cb.checked = !!state[id];
+      cb.addEventListener("change",()=>{ const st = load("dpdp-"+key); st[id] = cb.checked; save("dpdp-"+key,st); tally(key); });
+      ul.appendChild(li);
+    });
+    host.appendChild(el);
+  });
+  tally(key);
+}
+function tally(key){
+  let done = 0, total = 0;
+  document.querySelectorAll("#"+key+"-stages .stage").forEach(st=>{
+    const boxes = [...st.querySelectorAll("input")], d = boxes.filter(b=>b.checked).length;
+    st.querySelector(".count").textContent = d+" of "+boxes.length;
+    st.classList.toggle("complete", d === boxes.length);
+    done += d; total += boxes.length;
+  });
+  document.getElementById(key+"-count").textContent = done+" of "+total+" done";
+  document.getElementById(key+"-bar").style.width = (total? done/total*100 : 0)+"%";
+}
+render("cm"); render("df");
+document.getElementById("cm-reset").addEventListener("click",()=>{ save("dpdp-cm",{}); render("cm"); });
+</script>
